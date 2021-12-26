@@ -108,7 +108,6 @@ export default {
 
   .element {
     height: 50px;
-    width: 75px;
     box-sizing: border-box;
   }
 
@@ -169,11 +168,24 @@ export default {
     border-radius: 50%;
     width: 50px;
   }
-  .is-parallelogram {
-    // transform: skew(10deg);
+  .is-diamond {
     width: 40px;
     height: 40px;
     transform: rotate(45deg)
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .card {
+    .element {
+      height: 35px;
+      width: 35px;
+
+      &.is-diamond {
+        height: 30px;
+        width: 30px;
+      }
+    }
   }
 }
 </style>

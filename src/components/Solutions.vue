@@ -52,14 +52,13 @@ export default {
   margin-top: 40px;
   background-image: linear-gradient(to right, #434343 0%, black 100%);
   color: white;
-  padding: 20px 40px;
   box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
 
   .title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .option, .next-button {

@@ -49,7 +49,7 @@ export default {
       attributes: ['quantity', 'color', 'shape', 'fill'],
       constants: {
         colors: ['orange', 'purple', 'green'],
-        shapes: ['pill', 'round', 'parallelogram'],
+        shapes: ['pill', 'round', 'diamond'],
         fill: ['full', 'empty', 'hatched'],
       },
       gameStats: {
@@ -121,11 +121,13 @@ export default {
     },
     
     cardClicked(card) {
-      const alreadyClicked = this.cardsClicked.find((cardClicked) => cardClicked.index === card.index)
-      if (!alreadyClicked) {
-        this.cardsClicked.push(card);
-        this.boardCards[card.index].isSelected = true
-        if (this.cardsClicked.length === 3) this.checkGuess()
+      if (!this.solutions.solutionRevealed) {
+        const alreadyClicked = this.cardsClicked.find((cardClicked) => cardClicked.index === card.index)
+        if (!alreadyClicked) {
+          this.cardsClicked.push(card);
+          this.boardCards[card.index].isSelected = true
+          if (this.cardsClicked.length === 3) this.checkGuess()
+        }
       }
     },
 
@@ -230,22 +232,30 @@ export default {
 <style lang="scss">
 body {
   margin: 0;
+  height: 100vh;
+  width: 100vw;
+  padding: 20px;
+  background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 #app {
-  height: 100vh;
-  width: 100vw;
   display: flex;
+  width: 100%;
+  height: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   position: relative;
   font-family: 'Montserrat', sans-serif;
-  background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  box-sizing: border-box;
 
   .board {
     padding: 50px;
-    width: 800px;
-    height: 800px;
+    width: 70%;
+    max-width: 800px;
+    height: 100%;
     border-radius: 6px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -253,12 +263,80 @@ body {
     gap: 15px;
     background-image: linear-gradient(to right, #434343 0%, black 100%);
     box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
   }
 
   .right-block {
     align-self: flex-start;
-    margin-left: 40px;
-    margin-top: 40px;
+    width: 20%;
+    min-width: 230px;
+    max-width: 500px;
+    box-sizing: border-box;
+
+    > div {
+      padding: 20px 40px;
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  #app {
+    flex-direction: column;
+
+    .board {
+      width: 100%;
+      height: 650px;
+    }
+
+    .right-block {
+      align-self: unset;
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+
+      > div {
+        padding: 10px 15px;
+      }
+
+      .solutions {
+        margin-top: 0;
+        min-width: 180px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 0;
+    height: unset;
+
+    #app {
+      height: unset;
+
+      .board {
+        height: 100vh;
+        padding: 20px 10px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        gap: 5px;
+      }
+
+      .right-block {
+        flex-direction: column;
+
+        > div {
+          height: unset;
+          min-height: unset;
+        }
+
+        .solutions {
+          margin-left: 0;
+          margin-top: 10px;
+        }
+      }
+    }
   }
 }
 </style>
